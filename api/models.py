@@ -17,18 +17,22 @@ class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    participants = models.ManyToManyField(User, related_name='participants', blank=True)
 
 
     def __str__(self):
         return self.name
 
+class Team(models.Model):
+    team_leaders = models.ManyToManyField(User, related_name='team_leaders', blank=True)
+    team_name = models.CharField(max_length=200)
+    team_name_shortcut = models.CharField(max_length=4)
+    team_members = models.ManyToManyField(User, related_name='team_members', blank=True)
 
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    title = models.TextField()
-    body = models.TextField()
+    title = models.CharField(max_length=200)
+    body = models.TextField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     done = models.DateTimeField(auto_now=True)
@@ -38,3 +42,13 @@ class Task(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+class Team_task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    title = models.TextField()
+    body = models.TextField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    done = models.DateTimeField(auto_now=True)
