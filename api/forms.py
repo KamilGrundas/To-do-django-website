@@ -26,4 +26,4 @@ class UserForm(ModelForm):
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['title','body']
+        fields = ['title','body','deadline']

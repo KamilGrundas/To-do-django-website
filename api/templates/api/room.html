@@ -16,8 +16,8 @@
 
           <div class="roomList__header">
             <div>
-              <h2>Study Room</h2>
-              <p>{{room_count}} Rooms available</p>
+              <h2>{{room.name}}</h2>
+              <p>{{task_count}} Tasks to do</p>
             </div>
             <form method = "GET" action="{% url 'create-task' %}">
               {% csrf_token %}

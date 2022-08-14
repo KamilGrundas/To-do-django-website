@@ -97,12 +97,13 @@ def createRoom(request):
     return render(request, 'api/room_form.html', context)
 
 def room(request, pk):
+
     rooms = Room.objects.all()
     room = Room.objects.get(id=pk)
     room_tasks = room.task_set.all().order_by('-created')
+    task_count = room_tasks.count()
 
-
-    context = {'room': room, 'room_tasks': room_tasks, 'rooms':rooms}
+    context = {'room': room, 'room_tasks': room_tasks, 'rooms':rooms, 'task_count':task_count}
     if request.user == room.host:
 
         return render(request, 'api/room.html', context)
@@ -119,9 +120,16 @@ def createTask(request):
             user=request.user,
             room=room,
             title=request.POST.get('title'),
-            body=request.POST.get('body')
+            body=request.POST.get('body'),
+            deadline=request.POST.get('deadline')
         )
 
         return redirect('home')
     context = {'form': form}
     return render(request, 'api/task_form.html', context)
+
+def userProfile(request, pk):
+    rooms = Room.objects.all()
+    user = User.objects.get(id=pk)
+    context={'user':user, 'rooms':rooms}
+    return render(request, 'api/profile.html', context)

@@ -1,6 +1,7 @@
 from django.db import models
-
+import datetime
 from django.contrib.auth.models import AbstractUser
+datetime.datetime.now().strftime("%Y-%d-%m %H:%M:%S")
 
 # Create your models here.
 
@@ -36,6 +37,7 @@ class Task(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     done = models.DateTimeField(auto_now=True)
+    deadline = models.DateTimeField(blank=True)
 
     class Meta:
         ordering = ['-done', '-updated', '-created']
