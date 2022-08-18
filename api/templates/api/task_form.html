@@ -7,7 +7,7 @@
       <div class="layout__box">
         <div class="layout__boxHeader">
           <div class="layout__boxTitle">
-            <a href="{% url 'home' %}">
+            <a href="{{request.META.HTTP_REFERER}}">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>arrow-left</title>
                 <path
@@ -34,7 +34,7 @@
 
             <div class="form__group">
               <label for="room_description">Date</label>
-              <input name="deadline" type = "datetime-local" value="{{form.body}}" for="room_description">Date</input>
+              <input name="deadline" type = "datetime-local" required/>
             </div>
 
 
@@ -57,7 +57,7 @@
               <textarea name="room_about" id="room_about" placeholder="Write about your study group..."></textarea>
             </div>
             <div class="form__action"> -->
-              <a class="btn btn--dark" href="{% url 'home' %}">Cancel</a>
+              <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
               <button class="btn btn--main" type="submit">Submit</button>
             </div>
           </form>

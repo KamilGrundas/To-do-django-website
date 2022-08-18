@@ -1,6 +1,7 @@
 
 
 {% for task in room_tasks %}
+{% if task.archived == '0' %}
 <div class="roomListRoom">
   <div class="roomListRoom__header">
     <a href="{% url 'user-profile' room.host.id %}" class="roomListRoom__author">
@@ -20,7 +21,7 @@
     <h1>{{task.body | linebreaks}}</h1>
   </div>
   <div class="roomListRoom__meta">
-    <button class="btn btn--main" type="submit" name="pk" value ="{{room.id}}">
+    <a href = "{% url 'complete-task' task.id %}" class="btn btn--main" type="submit" name="pk" value ="{{task.id}}">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
         <title>add</title>
         <path
@@ -28,8 +29,8 @@
         ></path>
       </svg>
       Complete
-    </button>
-    <button class="btn btn--main" type="submit" name="pk" value ="{{room.id}}">
+    </a>
+    <a href = "{% url 'delete-task' task.id %}" class="btn btn--main" type="submit" name="pk" value ="{{task.id}}">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
         <title>add</title>
         <path
@@ -37,7 +38,8 @@
         ></path>
       </svg>
       Remove
-    </button>
+    </a>
   </div>
 </div>
+{% endif %}
 {% endfor %}

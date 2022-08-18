@@ -13,6 +13,9 @@ urlpatterns = [
     path('create-room/',views.createRoom, name="create-room"),
     path('create-task/',views.createTask, name="create-task"),
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
+    path('delete-task/<str:pk>/',views.deleteTask, name="delete-task"),
+    path('complete-task/<str:pk>/', views.completeTask, name="complete-task"),
+    # path('archives/<str:pk>/', views.archives, name="archives"),
 
 
 ]

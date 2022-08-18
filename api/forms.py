@@ -21,7 +21,7 @@ class RoomForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'name','username','email','bio']
+        fields = ['avatar', 'name','bio']
 
 class TaskForm(ModelForm):
     class Meta:
