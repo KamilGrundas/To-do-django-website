@@ -57,7 +57,7 @@
               <textarea name="room_about" id="room_about" placeholder="Write about your study group..."></textarea>
             </div>
             <div class="form__action"> -->
-              <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
+              <a class="btn btn--dark" href="{% url 'room' room.id %}">Cancel</a>
               <button class="btn btn--main" type="submit">Submit</button>
             </div>
           </form>

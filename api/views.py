@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required(login_url='/login/')
 def home(request):
-    rooms = Room.objects.all()
+    rooms = Room.objects.filter(host=request.user)
     room_count = rooms.count()
     context = {'rooms':rooms, 'room_count':room_count}
     return render(request, 'api/home.html', context)
@@ -99,13 +99,12 @@ def createRoom(request):
     return render(request, 'api/room_form.html', context)
 
 def room(request, pk):
-
-    rooms = Room.objects.all()
+    rooms = Room.objects.filter(host=request.user) 
     room = Room.objects.get(id=pk)
-    room_tasks = room.task_set.all().order_by('-created')
+    room_tasks = room.task_set.filter(archived = 0).order_by('-created')
     task_count = room_tasks.count()
 
-    context = {'room': room, 'room_tasks': room_tasks, 'rooms':rooms, 'task_count':task_count}
+    context = {'room': room, 'rooms':rooms, 'room_tasks': room_tasks, 'task_count':task_count}
     if request.user == room.host:
 
         return render(request, 'api/room.html', context)
@@ -113,11 +112,20 @@ def room(request, pk):
         return HttpResponse('You are not allowed here!')
 
 def createTask(request):
-    form = TaskForm()
+
+
     pk = request.GET.get("pk")
     room = Room.objects.get(id=pk)
-    if request.method == 'POST':
 
+
+    form = TaskForm()
+    
+    context = {'form': form, 'room':room}
+
+    if request.user != room.host:
+        return HttpResponse('You are not allowed here!')
+
+    if request.method == 'POST':
         Task.objects.create(
             user=request.user,
             room=room,
@@ -126,38 +134,42 @@ def createTask(request):
             deadline=request.POST.get('deadline'),
             archived = 0,
         )
+        return redirect('room', pk)
+        
 
-        return redirect('home')
-    context = {'form': form}
     return render(request, 'api/task_form.html', context)
 
 @login_required(login_url='login')
 def deleteTask(request, pk):
 
-    task = Task.objects.get(id=pk)
+    # try:
 
-    if request.user != task.user:
-        return HttpResponse('You are not allowed here!')
 
-# Tutaj do poprawy
-    if request.method == 'POST':
-        task.delete()
-        pk = task.room.id
-# tutaj
-        rooms = Room.objects.all() 
-        room = Room.objects.get(id=pk)
-        room_tasks = room.task_set.all().order_by('-created')
-        task_count = room_tasks.count()
-
-        context = {'room': room, 'room_tasks': room_tasks, 'rooms':rooms, 'task_count':task_count}
-        if request.user == room.host:
-
-            return render(request, 'api/room.html', context)
-        else:
+        task = Task.objects.get(id=pk)
+        if request.user != task.user:
             return HttpResponse('You are not allowed here!')
-# do tego
-        
-    return render(request, 'api/delete.html', {'obj':task.title})
+
+        if request.method == 'POST':
+            task.delete()
+
+            if task.archived == str(0):
+                pk = task.room.id
+
+
+                return redirect('room', pk)
+
+        #Archives page
+
+            else:
+                pk = request.user.id
+                return redirect('archives', pk)
+
+
+            
+        return render(request, 'api/delete.html', {'obj':task.title})
+
+    # except:
+    #     return HttpResponse('Something gone wrong!')
 
 def userProfile(request, pk):
     rooms = Room.objects.all()
@@ -165,20 +177,19 @@ def userProfile(request, pk):
     context={'user':user, 'rooms':rooms}
     return render(request, 'api/profile.html', context)
 
-# def archives(request, pk):
+def archivesPage(request, pk):
+    rooms = Room.objects.all()
+    tasks = Task.objects.filter(archived=1).filter(user=request.user)
+    archived_tasks = tasks
+    task_count = archived_tasks.count()
+    user = User.objects.get(id=pk)
 
-#     archives = Archives.objects.all()
-#     archive = Archives.objects.get(id=pk)
-#     archive_tasks = archives.task_set.all().order_by('-created')
-#     task_count_a = archive_tasks.count()
+    context = {'task_count':task_count,'archived_tasks':archived_tasks,'user':user,'rooms':rooms}
+    if request.user.id == user.id:
 
-#     context = {'archive': archive, 'archive_tasks': archive_tasks, 'archives':archives, 'task_count_a':task_count_a}
-#     if request.user == archive.host:
-
-#         return render(request, 'api/archives.html', context)
-#     else:
-#         return HttpResponse('You are not allowed here!')
-
+        return render(request, 'api/archives.html', context)
+    else:
+        return HttpResponse('You are not allowed here!')
 
 @login_required(login_url='login')
 def completeTask(request, pk):
@@ -188,23 +199,29 @@ def completeTask(request, pk):
     if request.user != task.user:
         return HttpResponse('You are not allowed here!')
 
-# Tutaj do poprawy
-    if request.method == 'POST':
+
+    if request.method == 'GET':
         task.archived = 1
         task.save()
+
         pk = task.room.id
-# tutaj
-        rooms = Room.objects.all() 
-        room = Room.objects.get(id=pk)
-        room_tasks = room.task_set.all().order_by('-created')
-        task_count = room_tasks.count()
 
-        context = {'room': room, 'room_tasks': room_tasks, 'rooms':rooms, 'task_count':task_count}
-        if request.user == room.host:
+        return redirect('room', pk)
 
-            return render(request, 'api/room.html', context)
-        else:
-            return HttpResponse('You are not allowed here!')
-# do tego
+@login_required(login_url='login')
+def undoneTask(request, pk):
+
+    task = Task.objects.get(id=pk)
+
+    if request.user != task.user:
+        return HttpResponse('You are not allowed here!')
+
+    if request.method == 'GET':
+        task.archived = 0
+        task.save()
         
-    return render(request, 'api/delete.html', {'obj':task.title})
+        #Room page
+        pk = task.room.id
+
+        return redirect('room', pk)
+     

@@ -15,7 +15,8 @@ urlpatterns = [
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
     path('delete-task/<str:pk>/',views.deleteTask, name="delete-task"),
     path('complete-task/<str:pk>/', views.completeTask, name="complete-task"),
-    # path('archives/<str:pk>/', views.archives, name="archives"),
+    path('archives/<str:pk>/', views.archivesPage, name="archives"),
+    path('undone-task/<str:pk>/', views.undoneTask, name="undone-task"),
 
 
 ]
