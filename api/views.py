@@ -1,7 +1,6 @@
-from unicodedata import name
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from .models import Room, Task , User, Archives
+from django.http import HttpResponse
+from .models import Room, Task , User
 from .forms import RoomForm, UserForm, MyUserCreationForm, TaskForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,9 +10,10 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required(login_url='/login/')
 def home(request):
-    rooms = Room.objects.filter(host=request.user)
+    tasks = Task.objects.filter(archived=False).filter(user=request.user)
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     room_count = rooms.count()
-    context = {'rooms':rooms, 'room_count':room_count}
+    context = {'tasks':tasks, 'rooms':rooms, 'room_count':room_count}
     return render(request, 'api/home.html', context)
 
 
@@ -56,9 +56,6 @@ def registerPage(request):
             user = form.save(commit=False)
             user.save()
             login(request, user)
-            Archives.objects.create(
-                host = user
-            )
             return redirect('home')
         else:
             messages.error(request, 'An error occured during registration :(')
@@ -91,7 +88,7 @@ def createRoom(request):
         Room.objects.create(
             host=request.user,
             name=request.POST.get('name'),
-            description=request.POST.get('description')
+            deleted=False,
         )
 
         return redirect('home')
@@ -99,13 +96,14 @@ def createRoom(request):
     return render(request, 'api/room_form.html', context)
 
 def room(request, pk):
-    rooms = Room.objects.filter(host=request.user) 
+    tasks = Task.objects.filter(archived=False).filter(user=request.user)
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     room = Room.objects.get(id=pk)
-    room_tasks = room.task_set.filter(archived = 0).order_by('-created')
+    room_tasks = room.task_set.filter(archived = False).order_by('-created')
     task_count = room_tasks.count()
 
-    context = {'room': room, 'rooms':rooms, 'room_tasks': room_tasks, 'task_count':task_count}
-    if request.user == room.host:
+    context = {'tasks':tasks, 'room': room, 'rooms':rooms, 'room_tasks': room_tasks, 'task_count':task_count}
+    if request.user == room.host and room.deleted == False:
 
         return render(request, 'api/room.html', context)
     else:
@@ -132,7 +130,7 @@ def createTask(request):
             title=request.POST.get('title'),
             body=request.POST.get('body'),
             deadline=request.POST.get('deadline'),
-            archived = 0,
+            archived = False,
         )
         return redirect('room', pk)
         
@@ -142,7 +140,7 @@ def createTask(request):
 @login_required(login_url='login')
 def deleteTask(request, pk):
 
-    # try:
+    try:
 
 
         task = Task.objects.get(id=pk)
@@ -152,7 +150,7 @@ def deleteTask(request, pk):
         if request.method == 'POST':
             task.delete()
 
-            if task.archived == str(0):
+            if task.archived == False:
                 pk = task.room.id
 
 
@@ -168,23 +166,23 @@ def deleteTask(request, pk):
             
         return render(request, 'api/delete.html', {'obj':task.title})
 
-    # except:
-    #     return HttpResponse('Something gone wrong!')
+    except:
+        return HttpResponse('Something gone wrong!')
 
 def userProfile(request, pk):
-    rooms = Room.objects.all()
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     user = User.objects.get(id=pk)
     context={'user':user, 'rooms':rooms}
     return render(request, 'api/profile.html', context)
 
 def archivesPage(request, pk):
-    rooms = Room.objects.all()
-    tasks = Task.objects.filter(archived=1).filter(user=request.user)
-    archived_tasks = tasks
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    tasks = Task.objects.filter(archived=False).filter(user=request.user)
+    archived_tasks = Task.objects.filter(archived=True).filter(user=request.user)
     task_count = archived_tasks.count()
     user = User.objects.get(id=pk)
 
-    context = {'task_count':task_count,'archived_tasks':archived_tasks,'user':user,'rooms':rooms}
+    context = {'task_count':task_count,'archived_tasks':archived_tasks,'user':user,'rooms':rooms,'tasks':tasks}
     if request.user.id == user.id:
 
         return render(request, 'api/archives.html', context)
@@ -201,7 +199,7 @@ def completeTask(request, pk):
 
 
     if request.method == 'GET':
-        task.archived = 1
+        task.archived = True
         task.save()
 
         pk = task.room.id
@@ -217,7 +215,7 @@ def undoneTask(request, pk):
         return HttpResponse('You are not allowed here!')
 
     if request.method == 'GET':
-        task.archived = 0
+        task.archived = False
         task.save()
         
         #Room page
@@ -225,3 +223,33 @@ def undoneTask(request, pk):
 
         return redirect('room', pk)
      
+@login_required(login_url='login')
+def updateRooms(request):
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    context = {'rooms':rooms}
+    return render(request, 'api/topics.html', context)
+
+
+@login_required(login_url='login')
+def deleteRoom(request, pk):
+
+    # try:
+    
+        room = Room.objects.get(id=pk)
+        tasks = Task.objects.filter(room=room).filter(archived=False)
+
+
+        if request.user != room.host:
+            return HttpResponse('You are not allowed here!')
+
+        if request.method == 'POST':
+            tasks.delete()
+            room.deleted = True
+            room.save()
+
+            return redirect('update-rooms')
+            
+        return render(request, 'api/delete.html', {'obj':room.name})
+
+    # except:
+    #     return HttpResponse('Something gone wrong!')

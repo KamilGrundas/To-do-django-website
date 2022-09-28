@@ -1,15 +1,14 @@
 <div class="topics">
   <div class="topics__header">
     <h2>Private</h2>
+    <a href="{% url 'update-rooms'%}">Edit</a>
   </div>
   <ul class="topics__list">
  
     {% for room in rooms %}
-      {% if request.user == room.host %}
-      <li>
-        <a href="{% url 'room' room.id %}">{{room.name}}</a>
-      </li>
-      {% endif %}
+    <li>
+      <a href="{% url 'room' room.id %}">{{room.name}}</a>
+    </li>
     {% endfor %}
   </ul>
   <a class="btn btn--main" href="{% url 'create-room' %}">
