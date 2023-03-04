@@ -19,19 +19,25 @@ def home(request):
 
 def loginPage(request):
     page = 'login'
+    context = {'page':page}
     if request.user.is_authenticated:
         return redirect('home')
 
     if request.method == 'POST':
-        email = request.POST.get('email').lower()
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
+    #Checks that user exist
+
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(username=username)
         except:
             messages.error(request, 'User does not exist')
+            return render(request, 'api/login_register.html', context)
 
-        user = authenticate(request, email=email, password=password)
+    #If user exist check is password is correct
+
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
@@ -39,7 +45,7 @@ def loginPage(request):
         else:
             messages.error(request, 'Username or password does not exist')
 
-    context = {'page':page}
+    
     return render(request, 'api/login_register.html', context)
 
 
@@ -52,8 +58,10 @@ def registerPage(request):
 
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
+
         if form.is_valid():
             user = form.save(commit=False)
+            user.name = user.username
             user.save()
             login(request, user)
             return redirect('home')
@@ -74,6 +82,8 @@ def updateUser(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES, instance = user)
         if form.is_valid():
+            if user.bio == "":
+                user.bio = "No information given."
             form.save()
             return redirect('user-profile', pk=user.id)
 

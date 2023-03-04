@@ -11,13 +11,26 @@
       <div class="layout__body">
         <h2 class="auth__tagline">Make life easier</h2>
 
+        {% if messages %}
+        <div  class="activities__boxContent">
+          <div class="activities__boxRoomContent">
+            {% for message in messages %}
+            <p id="messages">{{message}}</p> 
+            {% endfor %}
+          
+          </div>
+        </div>
+      
+        {% endif %}
+
+        <br>
         <form class="form" action="" method="POST">
           {% csrf_token %}
           <div class="form__group form__group">
-            <label for="room_name">Email</label>
+            <label for="room_name">Username</label>
             <input
               id="username"
-              name="email"
+              name="username"
               type="text"
               placeholder="e.g. dennis_ivy"
             />
@@ -70,6 +83,10 @@
       </div>
       <div class="layout__body">
         <h2 class="auth__tagline">Make life easier</h2>
+
+        {% for message in messages %}
+        <p id="messages">{{message}}</p> 
+        {% endfor %}
 
         <form class="form" action="" method="POST">
           {% csrf_token %} {% for field in form %}
