@@ -12,8 +12,10 @@ from django.contrib.auth import authenticate, login, logout
 def home(request):
     tasks = Task.objects.filter(archived=False).filter(user=request.user)
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
-    room_count = rooms.count()
-    context = {'tasks':tasks, 'rooms':rooms, 'room_count':room_count}
+    room_tasks = tasks
+
+    context = {'tasks':tasks, 'rooms':rooms,
+               'room_tasks':room_tasks}
     return render(request, 'api/home.html', context)
 
 
@@ -35,7 +37,7 @@ def loginPage(request):
             messages.error(request, 'User does not exist')
             return render(request, 'api/login_register.html', context)
 
-    #If user exist check is password is correct
+    #If user exist check is password correct
 
         user = authenticate(request, username=username, password=password)
 
@@ -43,7 +45,7 @@ def loginPage(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username or password does not exist')
+            messages.error(request, 'Wrong password')
 
     
     return render(request, 'api/login_register.html', context)

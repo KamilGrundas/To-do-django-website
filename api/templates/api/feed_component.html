@@ -1,6 +1,8 @@
 
 
 {% for task in room_tasks %}
+{% if task.room == room %}
+
 <div class="roomListRoom">
   <div class="roomListRoom__header">
     <a href="" class="roomListRoom__author">
@@ -40,4 +42,8 @@
     </a>
   </div>
 </div>
+
+
+{% endif %}
+
 {% endfor %}
