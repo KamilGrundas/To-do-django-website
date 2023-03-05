@@ -30,11 +30,11 @@
 
     {% for team in teams %}
     <li>
-      <a href="{% url 'room' room.id %}">{{room.name}}</a>
+      <a href="{% url 'team' team.id %}">{{team.team_name}}</a>
     </li>
     {% endfor %}
   </ul>
-  <a class="btn btn--main" href="{% url 'create-room' %}">
+  <a class="btn btn--main" href="{% url 'create-team' %}">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
       <title>add</title>
       <path

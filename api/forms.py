@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Room, User, Task
+from .models import Room, User, Task, Team
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -27,3 +27,10 @@ class TaskForm(ModelForm):
     class Meta:
         model = Task
         fields = ['title','body','deadline']
+        
+class TeamForm(ModelForm):
+    class Meta:
+        model = Team
+        fields = ['team_name','team_name_shortcut']
+
+

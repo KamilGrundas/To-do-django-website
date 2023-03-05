@@ -16,7 +16,7 @@
 
           <div class="roomList__header">
             <div>
-              <h2>{{room.name}}</h2>
+              <h2>{{team.team_name}}</h2>
               <p>Tasks to do: {{task_count}}</p>
             </div>
             <form method = "GET" action="{% url 'create-task' %}">
@@ -33,13 +33,13 @@
           </form>
           </div>
 
-          {% include 'api/feed_component.html' %}
+          {% include 'api/feed_component_team.html' %}
 
         </div>
         <!-- Room List End -->
 
         <!-- Activities Start -->
-        {% include 'api/all_tasks_component.html' %}
+        {% include 'api/team_members.html' %}
 
         <!-- Activities End -->
       </div>

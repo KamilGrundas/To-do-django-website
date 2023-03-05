@@ -1,0 +1,45 @@
+<div class="activities">
+  <div class="activities__header">
+    <h2>All tasks</h2>
+  </div>
+
+  {% for leader in leaders %}
+
+
+  <div class="activities__box">
+    <div class="activities__boxHeader roomListRoom__header">
+
+      <p>
+        <span>Leader</span>
+      </p>
+    </div>
+    <div>
+      <p><a href= "">{{leader.name}} <br>
+      <span style="font-size: 12px">@{{leader}}</span></a></p>
+    </div>
+
+  </div>
+
+  {% endfor %}
+
+  {% for member in members %}
+  {% if member not in leaders %}
+
+  <div class="activities__box">
+    <div class="activities__boxHeader roomListRoom__header">
+
+      <p>
+        <span>Member</span>
+      </p>
+    </div>
+    <div>
+      <p><a href= "">{{member.name}} <br>
+      <span style="font-size: 12px">@{{member}}</span></a></p>
+    </div>
+
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+

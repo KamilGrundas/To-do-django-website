@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Room, Task , User
-from .forms import RoomForm, UserForm, MyUserCreationForm, TaskForm
+from .models import Room, Task , User, Team, Team_task
+from .forms import RoomForm, UserForm, MyUserCreationForm, TaskForm, TeamForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -12,10 +12,11 @@ from django.contrib.auth import authenticate, login, logout
 def home(request):
     tasks = Task.objects.filter(archived=False).filter(user=request.user)
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    teams = Team.objects.filter(team_members = request.user)
     room_tasks = tasks
 
     context = {'tasks':tasks, 'rooms':rooms,
-               'room_tasks':room_tasks}
+               'room_tasks':room_tasks, 'teams':teams}
     return render(request, 'api/home.html', context)
 
 
@@ -265,3 +266,41 @@ def deleteRoom(request, pk):
 
     # except:
     #     return HttpResponse('Something gone wrong!')
+
+
+@login_required(login_url='login')
+def createTeam(request):
+    form = TeamForm()
+    if request.method == 'POST':
+
+        team = Team.objects.create(
+            team_name = request.POST.get('team_name'),
+            team_name_shortcut = request.POST.get('team_name_shortcut'),
+        )
+        team.team_leaders.add(request.user)
+        team.team_members.add(request.user)
+
+        return redirect('home')
+    context = {'form': form}
+    return render(request, 'api/team_form.html', context)
+
+def team(request, pk):
+    teams = Team.objects.filter(team_members = request.user)
+    team = Team.objects.get(id=pk)
+    tasks = Team_task.objects.filter(team = team.pk)
+    rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    task_count = tasks.count()
+    members = team.team_members.all()
+    leaders = team.team_leaders.all()
+
+
+
+    context = {'tasks':tasks,'rooms':rooms, 'task_count':task_count,
+               'teams':teams, 'members':members,'leaders':leaders}
+
+
+    if request.user in members:
+
+        return render(request, 'api/team.html', context)
+    else:
+        return HttpResponse('You are not allowed here!')

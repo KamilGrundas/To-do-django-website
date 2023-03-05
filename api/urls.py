@@ -19,6 +19,8 @@ urlpatterns = [
     path('complete-task/<str:pk>/', views.completeTask, name="complete-task"),
     path('archives/<str:pk>/', views.archivesPage, name="archives"),
     path('undone-task/<str:pk>/', views.undoneTask, name="undone-task"),
+    path('create-team/',views.createTeam, name="create-team"),
+    path('team/<str:pk>/', views.team, name="team"),
 
 
 

@@ -51,7 +51,6 @@ class Task(models.Model):
 
 class Team_task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     title = models.TextField()
     body = models.TextField()
