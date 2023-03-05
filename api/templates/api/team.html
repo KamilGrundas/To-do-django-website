@@ -17,11 +17,11 @@
           <div class="roomList__header">
             <div>
               <h2>{{team.team_name}}</h2>
-              <p>Tasks to do: {{task_count}}</p>
+              <p>Tasks to do: {{team.id}}</p>
             </div>
-            <form method = "GET" action="{% url 'create-task' %}">
+            <form method = "GET" action="{% url 'create-team-task' %}">
               {% csrf_token %}
-              <button class="btn btn--main" type="submit" name="pk" value ="{{room.id}}">
+              <button class="btn btn--main" type="submit" name="pk" value ="{{team.id}}">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                   <title>add</title>
                   <path

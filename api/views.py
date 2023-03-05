@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Room, Task , User, Team, Team_task
-from .forms import RoomForm, UserForm, MyUserCreationForm, TaskForm, TeamForm
+from .forms import RoomForm, UserForm, MyUserCreationForm, TaskForm, TeamForm, Team_TaskForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -287,6 +287,7 @@ def createTeam(request):
 def team(request, pk):
     teams = Team.objects.filter(team_members = request.user)
     team = Team.objects.get(id=pk)
+    team_tasks = Team_task.objects.filter(team=team)
     tasks = Team_task.objects.filter(team = team.pk)
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     task_count = tasks.count()
@@ -296,7 +297,8 @@ def team(request, pk):
 
 
     context = {'tasks':tasks,'rooms':rooms, 'task_count':task_count,
-               'teams':teams, 'members':members,'leaders':leaders}
+               'teams':teams, 'members':members,'leaders':leaders, 'team':team,
+               'team_tasks':team_tasks}
 
 
     if request.user in members:
@@ -304,3 +306,32 @@ def team(request, pk):
         return render(request, 'api/team.html', context)
     else:
         return HttpResponse('You are not allowed here!')
+    
+def createTeam_task(request):
+
+
+    pk = request.GET.get("pk")
+    team = Team.objects.get(id=pk)
+
+
+    form = Team_TaskForm()
+    
+    context = {'form': form, 'team':team}
+
+    leaders = team.team_leaders.all()
+
+    if request.user not in leaders:
+        return HttpResponse('You are not allowed here!')
+
+    if request.method == 'POST':
+        Team_task.objects.create(
+            team=team,
+            title=request.POST.get('title'),
+            body=request.POST.get('body'),
+            deadline=request.POST.get('deadline'),
+            archived = False,
+        )
+        return redirect('team', pk)
+        
+
+    return render(request, 'api/team_task_form.html', context)

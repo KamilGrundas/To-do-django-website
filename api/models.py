@@ -50,10 +50,12 @@ class Task(models.Model):
         return self.title[0:50]
 
 class Team_task(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team_members = models.ManyToManyField(User, blank=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     title = models.TextField()
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     done = models.DateTimeField(auto_now=True)
+    deadline = models.DateTimeField()
+    archived = models.BooleanField(default=False)
