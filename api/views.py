@@ -294,6 +294,19 @@ def team(request, pk):
     members = team.team_members.all()
     leaders = team.team_leaders.all()
 
+    #Invite system
+    if request.method == 'POST':
+            invite=request.POST.get('body')
+            user = User.objects.filter(username=invite)
+            #Check username is valid
+            if not user:
+                messages.error(request, 'There is no such user')
+            #If it is gets it and add to invited
+            else:
+                invite_user = User.objects.get(username = invite)
+                team.invited.add(invite_user)
+                messages.success(request, 'Invite sent')
+
 
 
     context = {'tasks':tasks,'rooms':rooms, 'task_count':task_count,

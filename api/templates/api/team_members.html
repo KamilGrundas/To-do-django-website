@@ -3,6 +3,28 @@
     <h2>Team members:</h2>
   </div>
 
+  <div class="activities__box">
+    {% if messages %}
+    <div  class="activities__boxContent">
+      <div class="activities__boxRoomContent">
+        {% for message in messages %}
+        <p id="messages">{{message}}</p> 
+        {% endfor %}
+      
+      </div>
+    </div>
+  
+    {% endif %}
+    <div class="room__message_left">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <input name="body" placeholder="Username" /></form>
+        <button class="btn btn--main" type="submit">Invite</button>
+    </div>
+
+
+  </div>
+
   {% for leader in leaders %}
 
 

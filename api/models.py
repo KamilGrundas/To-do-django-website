@@ -31,6 +31,7 @@ class Team(models.Model):
     team_name = models.CharField(max_length=200)
     team_name_shortcut = models.CharField(max_length=4)
     team_members = models.ManyToManyField(User, related_name='team_members', blank=True)
+    invited = models.ManyToManyField(User, related_name='invited', blank=True)
 
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

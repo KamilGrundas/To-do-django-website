@@ -1158,9 +1158,8 @@ a {
   margin-top: 0.5rem;
 }
 
-.room__message {
-  padding: 2rem;
-  position: absolute;
+.room__message_left {
+  padding: 1rem;
   z-index: 111;
   bottom: 0;
   left: 0;
@@ -1168,7 +1167,7 @@ a {
   background: transparent;
 }
 
-.room__message > form > input {
+.room__message_left > form > input {
   resize: none;
   background-color: var(--color-dark-light);
   color: var(--color-light);
@@ -1176,17 +1175,21 @@ a {
   outline: none;
   border-radius: 0.7rem;
   height: 4.5rem;
-  width: 100%;
-  margin-top: -1rem;
-  padding: 1.2rem;
+  width: 55%;
+  margin-top: -0.5rem;
+  padding: 1rem;
   font-size: 1.4rem;
   font-weight: 500;
   position: relative;
+  float: left;
 }
 
-.room__message > form > input::placeholder {
+.room__message_left > form > input::placeholder {
   color: var(--color-light-gray);
 }
+
+
+
 
 .participants__top span {
   color: var(--color-main);
