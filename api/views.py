@@ -66,6 +66,7 @@ def registerPage(request):
             user = form.save(commit=False)
             user.name = user.username
             user.save()
+
             login(request, user)
             return redirect('home')
         else:
@@ -85,8 +86,7 @@ def updateUser(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES, instance = user)
         if form.is_valid():
-            if user.bio == "":
-                user.bio = "No information given."
+
             form.save()
             return redirect('user-profile', pk=user.id)
 
