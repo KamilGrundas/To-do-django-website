@@ -8,8 +8,15 @@
 
     <nav class="header__menu">
       <!-- Logged In -->
+      
       {% if request.user.is_authenticated %}
+      
       <div class="header__user">
+        <p>        <a href="{% url 'user-profile' request.user.id %}">
+          <a href="" class="header__logo">
+            <img src="{% static 'images/icons/simplemail.svg' %}" />
+          </a>
+        </a></p>
         <a href="{% url 'user-profile' request.user.id %}">
           <div class="avatar avatar--medium active">
             <img src="{{request.user.avatar.url}}" />

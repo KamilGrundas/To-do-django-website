@@ -1,3 +1,4 @@
+{% load static %}
 <div class="activities">
   <div class="activities__header">
     <h2>Team members:</h2>
@@ -18,8 +19,8 @@
     <div class="room__message_left">
       <form action="" method="POST">
         {% csrf_token %}
-        <input name="body" placeholder="Username" /></form>
-        <button class="btn btn--main" type="submit">Invite</button>
+        <input name="body" placeholder="Username" />
+        <button class="btn btn--main" type="submit">Invite</button></form>
     </div>
 
 
@@ -30,17 +31,22 @@
 
   <div class="activities__box">
     <div class="activities__boxHeader roomListRoom__header">
+      <a href="{% url 'user-profile' leader.id %}" class="roomListRoom__author">
+        <div class="avatar avatar--small">
+          <img src="{{leader.avatar.url}}" />
+        </div>
 
-      <p>
-        <span>Leader</span>
-      </p>
-    </div>
-    <div>
-      <p><a href= "">{{leader.name}} <br>
-      <span style="font-size: 12px">@{{leader}}</span></a></p>
-    </div>
+          @{{leader.username}}
+        </p>
+      </a>
+      <a href="{% url 'user-profile' leader.id %}" class="header__logo">
+        <img src="{% static 'images/icons/crown.svg' %}" />
+      </a>
 
+
+    </div>
   </div>
+
 
   {% endfor %}
 
@@ -49,17 +55,14 @@
 
   <div class="activities__box">
     <div class="activities__boxHeader roomListRoom__header">
-
-      <p>
-        <span>Member</span>
-      </p>
+      <a href="{% url 'user-profile' member.id %}" class="roomListRoom__author">
+        <div class="avatar avatar--small">
+          <img src="{{member.avatar.url}}" />
+        </div>
+          @{{member.username}}
+        </p>
+      </a>
     </div>
-    <div>
-      <p><a href= "">{{member.name}} <br>
-      <span style="font-size: 12px">@{{member}}</span></a></p>
-    </div>
-
-  </div>
   {% endif %}
   {% endfor %}
 </div>
