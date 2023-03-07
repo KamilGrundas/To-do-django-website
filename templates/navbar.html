@@ -14,7 +14,11 @@
       <div class="header__user">
         <p>        <a href="{% url 'user-profile' request.user.id %}">
           <a href="{% url 'mailbox'%}" class="header__logo">
+            {% if request.user.invite_alert == False %}
             <img src="{% static 'images/icons/email.svg' %}" />
+            {% else %}
+            <img src="{% static 'images/icons/email-alert.svg' %}" />
+            {% endif %}
           </a>
         </a></p>
         <a href="{% url 'user-profile' request.user.id %}">

@@ -303,7 +303,6 @@ def team(request, pk):
             #Check username is valid
             if not user:
                 messages.error(request, 'There is no such user')
-            #If it is gets it and add to invited
 
             else:
                 invite_user = User.objects.get(username = invite)
@@ -311,8 +310,11 @@ def team(request, pk):
                     messages.error(request, 'The user is already in team.')
                 elif invite_user in invited:
                     messages.error(request, "The user is already invited.")
+                #If all conditions fulfiled
                 else: 
                     team.invited.add(invite_user)
+                    invite_user.invite_alert = True
+                    invite_user.save()
                     messages.success(request, 'Invite sent')
     team.save()
 
@@ -361,6 +363,8 @@ def createTeam_task(request):
 
 def mailBox(request):
     teams = Team.objects.filter(invited = request.user)
+    request.user.invite_alert = False
+    request.user.save()
     context = {'teams':teams}
     return render(request, 'api/mailbox.html', context)
 
@@ -381,6 +385,8 @@ def inviteAccept(request, pk):
         pk = team.id
 
         return redirect('team', pk)
+    
+
     
 def inviteDecline(request, pk):
     team = Team.objects.get(id=pk)
