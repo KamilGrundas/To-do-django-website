@@ -294,6 +294,7 @@ def team(request, pk):
     members = team.team_members.all()
     leaders = team.team_leaders.all()
     invited = team.invited.all()
+    
 
     #Invite system
     if request.method == 'POST':
@@ -313,6 +314,7 @@ def team(request, pk):
                 else: 
                     team.invited.add(invite_user)
                     messages.success(request, 'Invite sent')
+    team.save()
 
 
 
@@ -361,3 +363,35 @@ def mailBox(request):
     teams = Team.objects.filter(invited = request.user)
     context = {'teams':teams}
     return render(request, 'api/mailbox.html', context)
+
+
+def inviteAccept(request, pk):
+    team = Team.objects.get(id=pk)
+    invited_list = team.invited.all()
+
+    if request.user not in invited_list:
+        return HttpResponse('You are not allowed here!')
+
+
+    if request.method == 'GET':
+        team.team_members.add(request.user)
+        team.invited.remove(request.user)
+        team.save()
+
+        pk = team.id
+
+        return redirect('team', pk)
+    
+def inviteDecline(request, pk):
+    team = Team.objects.get(id=pk)
+    invited_list = team.invited.all()
+
+    if request.user not in invited_list:
+        return HttpResponse('You are not allowed here!')
+
+
+    if request.method == 'GET':
+        team.invited.remove(request.user)
+        team.save()
+
+        return redirect('mailbox')

@@ -23,6 +23,8 @@ urlpatterns = [
     path('team/<str:pk>/', views.team, name="team"),
     path('create-team-task/',views.createTeam_task, name="create-team-task"),
     path('mailbox/',views.mailBox, name="mailbox"),
+    path('invite-accept/<str:pk>/', views.inviteAccept, name="invite-accept"),
+    path('decline-accept/<str:pk>/', views.inviteDecline, name="decline-accept"),
 
 
 
