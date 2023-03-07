@@ -293,6 +293,7 @@ def team(request, pk):
     task_count = tasks.count()
     members = team.team_members.all()
     leaders = team.team_leaders.all()
+    invited = team.invited.all()
 
     #Invite system
     if request.method == 'POST':
@@ -302,10 +303,16 @@ def team(request, pk):
             if not user:
                 messages.error(request, 'There is no such user')
             #If it is gets it and add to invited
+
             else:
                 invite_user = User.objects.get(username = invite)
-                team.invited.add(invite_user)
-                messages.success(request, 'Invite sent')
+                if invite_user in members:
+                    messages.error(request, 'The user is already in team.')
+                elif invite_user in invited:
+                    messages.error(request, "The user is already invited.")
+                else: 
+                    team.invited.add(invite_user)
+                    messages.success(request, 'Invite sent')
 
 
 
