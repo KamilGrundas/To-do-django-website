@@ -13,8 +13,8 @@
       
       <div class="header__user">
         <p>        <a href="{% url 'user-profile' request.user.id %}">
-          <a href="" class="header__logo">
-            <img src="{% static 'images/icons/simplemail.svg' %}" />
+          <a href="{% url 'mailbox'%}" class="header__logo">
+            <img src="{% static 'images/icons/email.svg' %}" />
           </a>
         </a></p>
         <a href="{% url 'user-profile' request.user.id %}">

@@ -348,3 +348,9 @@ def createTeam_task(request):
         
 
     return render(request, 'api/team_task_form.html', context)
+
+
+def mailBox(request):
+    teams = Team.objects.filter(invited = request.user)
+    context = {'teams':teams}
+    return render(request, 'api/mailbox.html', context)
