@@ -25,10 +25,11 @@
           <div class="profile__about">
             <h3>About</h3>
             <p>
-              {% if user.bio == "" %}
+              {% if user.bio == "" or user.bio == None %}
               No information given.
-              {% endif %}
+              {% else %}
               {{user.bio}}
+              {% endif %}
             </p>
           </div>
         </div>

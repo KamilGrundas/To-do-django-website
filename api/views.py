@@ -313,6 +313,7 @@ def team(request, pk):
                 #If all conditions fulfiled
                 else: 
                     team.invited.add(invite_user)
+                    #alerts invited player about new invite
                     invite_user.invite_alert = True
                     invite_user.save()
                     messages.success(request, 'Invite sent')
@@ -363,6 +364,7 @@ def createTeam_task(request):
 
 def mailBox(request):
     teams = Team.objects.filter(invited = request.user)
+    #disables alert at invites button
     request.user.invite_alert = False
     request.user.save()
     context = {'teams':teams}
