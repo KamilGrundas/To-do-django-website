@@ -1108,55 +1108,6 @@ a {
   height: 64%;
 }
 
-.threads h3 {
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--color-gray);
-}
-
-.threads {
-  background: var(--color-bg);
-  border-radius: 0.7rem;
-  overflow-y: auto;
-  height: 100%;
-  margin-top: 28vh;
-  padding: 0 2rem 4rem 2rem;
-}
-
-.thread {
-  border-left: 2px solid var(--color-dark);
-  padding-left: 1rem;
-  margin: 2rem 0;
-  padding: 2rem;
-}
-
-.thread__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.thread__top svg {
-  fill: var(--color-dark-light);
-}
-
-.thread__author {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  font-size: 1.4rem;
-}
-
-.thread__authorInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.thread__details {
-  font-size: 1.4rem;
-  margin-top: 0.5rem;
-}
 
 .room__message_left {
   padding: 1rem;
@@ -1188,42 +1139,3 @@ a {
   color: var(--color-light-gray);
 }
 
-
-
-
-.participants__top span {
-  color: var(--color-main);
-  font-size: 1.3rem;
-  text-transform: none;
-}
-
-.participants__top {
-  justify-content: flex-start;
-  gap: 0.5rem;
-}
-
-.participants__list {
-  padding: 2rem;
-  height: 82.5vh;
-  overflow-y: scroll;
-  padding-bottom: 0;
-}
-
-.participant {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.participant p {
-  color: var(--color-light-gray);
-  line-height: 1.2;
-}
-
-.participant span {
-  display: block;
-  font-weight: 500;
-  color: var(--color-main);
-  font-weight: 1.4rem;
-}
