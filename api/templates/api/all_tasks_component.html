@@ -1,13 +1,11 @@
-<div class="activities">
-  <div class="activities__header">
+<div class="frame">
+  <div class="frame__header">
     <h2>All tasks</h2>
   </div>
-
+  {% comment %} List of all tasks {% endcomment %}
   {% for task in tasks %}
-
-  <div class="activities__box">
-    <div class="activities__boxHeader roomListRoom__header">
-
+  <div class="frame__box">
+    <div class="frame__boxHeader roomListRoom__header">
       <p>
         <span>Left {{task.deadline|timeuntil}}</span>
       </p>
@@ -19,8 +17,8 @@
       <span style="font-size: 14px">{{task.title}}</span></a></p>
     </div>
     {% if task.body != "" %}
-    <div  class="activities__boxContent">
-      <div class="activities__boxRoomContent">
+    <div  class="frame__boxContent">
+      <div class="frame__boxRoomContent">
         {{task.body}}
       </div>
     </div>

@@ -464,7 +464,7 @@ a {
 }
 
 @media screen and (max-width: 900px) {
-  .activities,
+  .frame,
   .topics {
     display: none;
   }
@@ -788,16 +788,16 @@ a {
 }
 
 /*==============================
-=>  Activities
+=>  alltasks
 ================================*/
 
-.activities {
+.frame {
   background: var(--color-dark);
   border-radius: 5px;
   overflow: hidden;
 }
 
-.activities__header h2 {
+.frame__header h2 {
   background-color: var(--color-dark-light);
   text-transform: uppercase;
   font-weight: 500;
@@ -807,37 +807,37 @@ a {
   font-size: 1.4rem;
 }
 
-.activities__box {
+.frame__box {
   margin: 1.5rem;
   padding: 1.5rem;
   border: 2px solid var(--color-dark-medium);
   border-radius: 5px;
 }
 
-.activities__boxHeader p {
+.frame__boxHeader p {
   font-size: 1.4rem;
   line-height: 1.3;
 }
 
-.activities__boxHeader p span {
+.frame__boxHeader p span {
   color: var(--color-gray);
   font-size: 1.2rem;
   display: block;
 }
 
-.activities__boxContent {
+.frame__boxContent {
   margin-left: 4.2rem;
 }
 
-.activities__boxContent {
+.frame__boxContent {
   font-size: 1.4rem;
 }
 
-.activities__boxContent a:hover {
+.frame__boxContent a:hover {
   text-decoration: underline;
 }
 
-.activities__boxRoomContent {
+.frame__boxRoomContent {
   background: var(--color-bg);
   padding: 1rem;
   border-radius: 5px;
@@ -960,7 +960,7 @@ a {
 ================================*/
 
 .room,
-.participants {
+.members {
   background: var(--color-dark);
   max-height: 87.5vh;
   border-radius: 0.7rem;
@@ -969,7 +969,7 @@ a {
 }
 
 @media screen and (max-width: 900px) {
-  .participants {
+  .members {
     display: none;
   }
 
@@ -979,7 +979,7 @@ a {
 }
 
 .room__top,
-.participants__top {
+.members__top {
   background: var(--color-dark-light);
   display: flex;
   justify-content: space-between;
@@ -1003,7 +1003,7 @@ a {
 }
 
 .room__topLeft h3,
-.participants__top {
+.members__top {
   text-transform: uppercase;
   font-weight: 500;
   color: var(--color-light);
@@ -1102,14 +1102,9 @@ a {
   margin: 1rem 0;
 }
 
-.room__conversation {
-  margin-top: 1rem;
-  margin-bottom: 4rem;
-  height: 64%;
-}
 
 
-.room__message_left {
+.room__invite_div {
   padding: 1rem;
   z-index: 111;
   bottom: 0;
@@ -1118,7 +1113,7 @@ a {
   background: transparent;
 }
 
-.room__message_left > form > input {
+.room__invite_div > form > input {
   resize: none;
   background-color: var(--color-dark-light);
   color: var(--color-light);
@@ -1135,7 +1130,7 @@ a {
   float: left;
 }
 
-.room__message_left > form > input::placeholder {
+.room__invite_div > form > input::placeholder {
   color: var(--color-light-gray);
 }
 

@@ -7,29 +7,21 @@
       <div class="container">
         <!-- Topics Start -->
         {% include 'api/topics_component.html' %}
-
         <!-- Topics End -->
 
-        <!-- Room List Start -->
+        <!-- Archived tasks List Start -->
         <div class="roomList">
-
-
           <div class="roomList__header">
             <div>
               <h2>Archives</h2>
               <p>Completed tasks: {{task_count}} </p>
             </div>
           </div>
-
           {% include 'api/feed_component_archives.html' %}
-
         </div>
-        <!-- Room List End -->
+        <!-- Archived tasks List End -->
 
-        <!-- Activities Start -->
         {% include 'api/all_tasks_component.html' %}
-
-        <!-- Activities End -->
       </div>
     </main>
 

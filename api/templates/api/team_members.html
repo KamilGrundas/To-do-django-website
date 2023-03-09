@@ -1,17 +1,17 @@
 {% load static %}
-<div class="activities">
-  <div class="activities__header">
+<div class="frame">
+  <div class="frame__header">
     <h2>Team members:</h2>
   </div>
 
 
 
-  <div class="activities__box">
+  <div class="frame__box">
     {% if request.user in leaders %}
 
     {% if messages %}
-    <div  class="activities__boxContent">
-      <div class="activities__boxRoomContent">
+    <div  class="frame__boxContent">
+      <div class="frame__boxRoomContent">
         {% for message in messages %}
         <p id="messages">{{message}}</p> 
         {% endfor %}
@@ -20,7 +20,7 @@
     </div>
   
     {% endif %}
-    <div class="room__message_left">
+    <div class="room__invite_div">
       <form action="" method="POST">
         {% csrf_token %}
         <input name="body" placeholder="Username" />
@@ -34,10 +34,10 @@
 
 
 
-  <div class="activities__box">
+  <div class="frame__box">
     {% endif %}
     {% for leader in leaders %}
-    <div class="activities__boxHeader roomListRoom__header">
+    <div class="frame__boxHeader roomListRoom__header">
       <a href="{% url 'user-profile' leader.id %}" class="roomListRoom__author">
         {% if leader.is_authenticated %}
         <div class="avatar avatar--small active">
@@ -64,8 +64,8 @@
   {% for member in members %}
   {% if member not in leaders %}
 
-  <div class="activities__box">
-    <div class="activities__boxHeader roomListRoom__header">
+  <div class="frame__box">
+    <div class="frame__boxHeader roomListRoom__header">
       <a href="{% url 'user-profile' member.id %}" class="roomListRoom__author">
         {% if member.is_authenticated %}
         <div class="avatar avatar--small active">

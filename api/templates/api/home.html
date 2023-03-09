@@ -5,14 +5,11 @@
 
     <main class="layout layout--3">
       <div class="container">
-        <!-- Topics Start -->
         {% include 'api/topics_component.html' %}
-
-        <!-- Topics End -->
-
 
         <!-- Room List Start -->
         <div class="roomList">
+          
           <div class="roomList__header">
             <p>Tasks to do: {{tasks|length}} </p>
             </div>
@@ -21,9 +18,7 @@
           
           <div class="roomList__header">
             <div>
-              <h2>{{room.name}}</h2>
-
-              
+              <h2>{{room.name}}</h2>          
 
             </div>
             <form method = "GET" action="{% url 'create-task' %}">
@@ -44,10 +39,8 @@
           {% endfor %}
         </div>
 
-        <!-- Activities Start -->
         {% include 'api/all_tasks_component.html' %}
 
-        <!-- Activities End -->
       </div>
     </main>
 
