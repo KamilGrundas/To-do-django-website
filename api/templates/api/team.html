@@ -20,8 +20,9 @@
           <div class="roomList__header">
             <div>
               <h2>{{team.team_name}}</h2>
-              <p>Tasks to do: {{team.id}}</p>
+              <p>Tasks to do: {{task_count}}</p>
             </div>
+            {% if request.user in leaders %}
             <form method = "GET" action="{% url 'create-team-task' %}">
               {% csrf_token %}
               <button class="btn btn--main" type="submit" name="pk" value ="{{team.id}}">
@@ -34,6 +35,7 @@
                 Create task
               </button>
           </form>
+          {% endif %}
           </div>
 
           {% include 'api/feed_component_team.html' %}

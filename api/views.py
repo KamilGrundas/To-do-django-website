@@ -110,12 +110,13 @@ def createRoom(request):
 
 def room(request, pk):
     tasks = Task.objects.filter(archived=False).filter(user=request.user)
+    teams = Team.objects.filter(team_members = request.user)
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     room = Room.objects.get(id=pk)
     room_tasks = room.task_set.filter(archived = False).order_by('-created')
     task_count = room_tasks.count()
 
-    context = {'tasks':tasks, 'room': room, 'rooms':rooms, 'room_tasks': room_tasks, 'task_count':task_count}
+    context = {'tasks':tasks, 'room': room, 'rooms':rooms, 'room_tasks': room_tasks, 'task_count':task_count, 'teams':teams}
     if request.user == room.host and room.deleted == False:
 
         return render(request, 'api/room.html', context)
@@ -184,18 +185,22 @@ def deleteTask(request, pk):
 
 def userProfile(request, pk):
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    tasks = Task.objects.filter(archived=False).filter(user=request.user)
+    teams = Team.objects.filter(team_members = request.user)
     user = User.objects.get(id=pk)
-    context={'user':user, 'rooms':rooms}
+    context={'user':user, 'rooms':rooms, 'teams':teams,'tasks':tasks}
     return render(request, 'api/profile.html', context)
 
 def archivesPage(request, pk):
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
+    teams = Team.objects.filter(team_members = request.user)
     tasks = Task.objects.filter(archived=False).filter(user=request.user)
     archived_tasks = Task.objects.filter(archived=True).filter(user=request.user)
     task_count = archived_tasks.count()
     user = User.objects.get(id=pk)
 
-    context = {'task_count':task_count,'archived_tasks':archived_tasks,'user':user,'rooms':rooms,'tasks':tasks}
+    context = {'task_count':task_count,'archived_tasks':archived_tasks,'user':user,'rooms':rooms,
+               'tasks':tasks, 'teams':teams}
     if request.user.id == user.id:
 
         return render(request, 'api/archives.html', context)

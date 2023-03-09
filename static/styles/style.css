@@ -86,7 +86,7 @@ a {
 .btn--link {
   border-radius: 0;
   padding: 0;
-  color: var(--color-main);
+  color: var(--color-dark-light);
   box-shadow: none;
 }
 
