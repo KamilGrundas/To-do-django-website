@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-  --color-main: #71c6dd;
-  --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
+  --color-main: #dbdbdb;
+  --color-main-light: #dbdbdb;
+  --color-dark: #1f1e1e;
+  --color-dark-medium: #dbdbdb;
+  --color-dark-light: #71c6dd;
   --color-light: #e5e5e5;
-  --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
+  --color-gray: #71c6dd;
+  --color-light-gray: #ffffff;
+  --color-bg: #000000;
   --color-success: #5dd693;
   --color-error: #fc4b0b;
 }
@@ -213,7 +213,7 @@ a {
   position: absolute;
   top: 5rem;
   right: 0.5rem;
-  background: var(--color-dark-light);
+  background: var(--color-dark);
   border-radius: 5px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
   overflow: hidden;
@@ -438,7 +438,7 @@ a {
 .layout__boxHeader {
   display: flex;
   padding: 1.5rem;
-  background-color: var(--color-dark-light);
+  background-color: var(--color-main);
 }
 
 .layout__boxTitle {
@@ -450,13 +450,13 @@ a {
 .layout__boxTitle h3 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: var(--color-dark);
 }
 
 .layout__boxTitle svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-main);
+  fill: var(--color-dark);
 }
 
 .layout__body {
@@ -798,11 +798,11 @@ a {
 }
 
 .frame__header h2 {
-  background-color: var(--color-dark-light);
+  background-color: var(--color-main);
   text-transform: uppercase;
   font-weight: 500;
   padding: 1rem 1.5rem;
-  color: var(--color-light);
+  color: var(--color-dark);
   letter-spacing: 1px;
   font-size: 1.4rem;
 }
@@ -1115,7 +1115,7 @@ a {
 
 .room__invite_div > form > input {
   resize: none;
-  background-color: var(--color-dark-light);
+  background-color: #828282;
   color: var(--color-light);
   border: none;
   outline: none;
