@@ -403,3 +403,10 @@ def inviteDecline(request, pk):
         team.save()
 
         return redirect('mailbox')
+    
+def teamList(request):
+    teams = Team.objects.filter(team_members = request.user)
+        
+    context = {'teams': teams}
+
+    return render(request, 'api/team_list.html', context)
