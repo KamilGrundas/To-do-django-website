@@ -420,6 +420,29 @@ def teamMembersList(request, pk):
     leaders = team.team_leaders.all()
     invited = team.invited.all()
 
+    #Invite system
+    if request.method == 'POST':
+            invite=request.POST.get('body')
+            user = User.objects.filter(username=invite)
+            #Check username is valid
+            if not user:
+                messages.error(request, 'There is no such user')
+
+            else:
+                invite_user = User.objects.get(username = invite)
+                if invite_user in members:
+                    messages.error(request, 'The user is already in team.')
+                elif invite_user in invited:
+                    messages.error(request, "The user is already invited.")
+                #If all conditions fulfiled
+                else: 
+                    team.invited.add(invite_user)
+                    #alerts invited player about new invite
+                    invite_user.invite_alert = True
+                    invite_user.save()
+                    messages.success(request, 'Invite sent')
+    team.save()
+
     context = {'team': team, 'members': members, 'leaders': leaders, 'invited': invited}
 
     return render(request, 'api/team_members_list.html', context)
