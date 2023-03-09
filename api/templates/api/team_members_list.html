@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <main class="create-room layout">
+      <div class="container">
+        <div class="layout__box">
+          <div class="layout__boxHeader">
+            <div class="layout__boxTitle">
+              <a href="{% url 'team' team.id %}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                  <title>arrow-left</title>
+                  <path
+                    d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"
+                  ></path>
+                </svg>
+              </a>
+              <h3>Your teams:</h3>
+            </div>
+          </div>
+
+          <div class="topics-page layout__body">
+
+
+            <ul class="topics__list2">
+
+              <div class="frame__box">
+                {% if request.user in leaders %}
+            
+                {% if messages %}
+                <div  class="frame__boxContent">
+                  <div class="frame__boxRoomContent">
+                    {% for message in messages %}
+                    <p id="messages">{{message}}</p> 
+                    {% endfor %}
+                  
+                  </div>
+                </div>
+              
+                {% endif %}
+                <div class="room__invite_div">
+                  <form action="" method="POST">
+                    {% csrf_token %}
+                    <input name="body" placeholder="Username" />
+                    &nbsp         &nbsp
+                    <button class="btn btn--main" type="submit">Invite</button></form>
+                </div>
+            
+            
+              </div>
+            
+            
+            
+            
+              <div class="frame__box">
+                {% endif %}
+                {% for leader in leaders %}
+                <div class="frame__boxHeader roomListRoom__header">
+                  <a href="{% url 'user-profile' leader.id %}" class="roomListRoom__author">
+                    {% if leader.is_authenticated %}
+                    <div class="avatar avatar--small active">
+                    {% else %}
+                    <div class="avatar avatar--small">
+                    {% endif %}
+                      <img src="{{leader.avatar.url}}" />
+                    </div>
+            
+                      @{{leader.username}}
+                    </p>
+                  </a>
+                  <a href="{% url 'user-profile' leader.id %}" class="header__logo">
+                    <img src="{% static 'images/icons/crown.svg' %}" />
+                  </a>
+            
+            
+                </div>
+              </div>
+            
+            
+              {% endfor %}
+            
+              {% for member in members %}
+              {% if member not in leaders %}
+            
+              <div class="frame__box">
+                <div class="frame__boxHeader roomListRoom__header">
+                  <a href="{% url 'user-profile' member.id %}" class="roomListRoom__author">
+                    {% if member.is_authenticated %}
+                    <div class="avatar avatar--small active">
+                    {% else %}
+                    <div class="avatar avatar--small">
+                    {% endif %}
+                      <img src="{{member.avatar.url}}" />
+                    </div>
+                      @{{member.username}}
+                    </p>
+                  </a>
+                </div>
+              {% endif %}
+              {% endfor %}
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock content %}

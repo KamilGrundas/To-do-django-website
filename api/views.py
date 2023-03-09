@@ -410,3 +410,16 @@ def teamList(request):
     context = {'teams': teams}
 
     return render(request, 'api/team_list.html', context)
+
+def teamMembersList(request, pk):
+    team = Team.objects.get(id=pk)
+
+    members = team.team_members.all()
+    if request.user not in members:
+        return HttpResponse('You are not allowed here!')
+    leaders = team.team_leaders.all()
+    invited = team.invited.all()
+
+    context = {'team': team, 'members': members, 'leaders': leaders, 'invited': invited}
+
+    return render(request, 'api/team_members_list.html', context)
