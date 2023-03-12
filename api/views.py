@@ -187,8 +187,10 @@ def userProfile(request, pk):
     rooms = Room.objects.filter(host=request.user).filter(deleted=False)
     tasks = Task.objects.filter(archived=False).filter(user=request.user)
     teams = Team.objects.filter(team_members = request.user)
+    archived_tasks = Task.objects.filter(archived=True).filter(user=request.user)
+    task_count = archived_tasks.count()
     user = User.objects.get(id=pk)
-    context={'user':user, 'rooms':rooms, 'teams':teams,'tasks':tasks}
+    context={'task_count':task_count ,'user':user, 'rooms':rooms, 'teams':teams,'tasks':tasks}
     return render(request, 'api/profile.html', context)
 
 def archivesPage(request, pk):

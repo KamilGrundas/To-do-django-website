@@ -23,6 +23,12 @@
             {% endif %}
           </div>
           <div class="profile__about">
+
+            <div class="profile__about">
+              <h3>Tasks done: 166</h3>
+            </div>
+            <br>
+
             <h3>About</h3>
             <p>
               {% if user.bio == "" or user.bio == None %}
@@ -32,6 +38,7 @@
               {% endif %}
             </p>
           </div>
+
         </div>
 
         {% include 'api/feed_component.html' %}
