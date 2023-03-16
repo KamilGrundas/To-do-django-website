@@ -19,7 +19,7 @@ Create task form:
 
 Team room:
 
-![image](https://user-images.githubusercontent.com/108836782/224538027-02dbcdea-cc64-4fbc-a30a-db0835526246.png)
+![image](https://user-images.githubusercontent.com/108836782/225745410-6786268b-8b81-494d-9cff-aba30f2350a4.png)
 
 Archived tasks:
 
