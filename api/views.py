@@ -269,7 +269,7 @@ def deleteRoom(request, pk):
 
             return redirect('update-rooms')
             
-        return render(request, 'api/delete.html', {'obj':room.name})
+        return render(request, 'api/delete.html', {'obj':room.name, 'obj2': 'delete'})
 
     # except:
     #     return HttpResponse('Something gone wrong!')
@@ -456,7 +456,7 @@ def teamMembersList(request, pk):
 
 
 @login_required(login_url='login')
-def deleteToom(request, pk):
+def deleteTeam(request, pk):
 
     # try:
     
@@ -473,4 +473,22 @@ def deleteToom(request, pk):
 
             return redirect('home')
             
-        return render(request, 'api/delete.html', {'obj':team.team_name})
+        return render(request, 'api/delete.html', {'obj':team.team_name, 'obj2': 'delete'})
+
+@login_required(login_url='login')
+def leaveTeam(request, pk):
+
+    # try:
+        team = Team.objects.get(id=pk)
+        members = team.team_members.all()
+
+
+        if request.user not in members:
+            return HttpResponse('You are not allowed here!')
+
+        if request.method == 'POST':
+            team.team_members.remove(request.user)
+
+            return redirect('home')
+            
+        return render(request, 'api/delete.html', {'obj':team.team_name, 'obj2': 'leave'})

@@ -27,7 +27,8 @@ urlpatterns = [
     path('decline-accept/<str:pk>/', views.inviteDecline, name="decline-accept"),
     path('team-list/',views.teamList, name="team-list"),
     path('team-members-list/<str:pk>/',views.teamMembersList, name="team-members-list"),
-    path('delete-team/<str:pk>/',views.deleteToom, name="delete-team"),
+    path('delete-team/<str:pk>/',views.deleteTeam, name="delete-team"),
+    path('leave-team/<str:pk>/',views.leaveTeam, name="leave-team"),
 
 
 
