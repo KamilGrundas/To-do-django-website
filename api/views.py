@@ -453,3 +453,24 @@ def teamMembersList(request, pk):
     context = {'team': team, 'members': members, 'leaders': leaders, 'invited': invited}
 
     return render(request, 'api/team_members_list.html', context)
+
+
+@login_required(login_url='login')
+def deleteToom(request, pk):
+
+    # try:
+    
+        team = Team.objects.get(id=pk)
+        leaders = team.team_leaders.all()
+
+
+
+        if request.user not in leaders:
+            return HttpResponse('You are not allowed here!')
+
+        if request.method == 'POST':
+            team.delete()
+
+            return redirect('home')
+            
+        return render(request, 'api/delete.html', {'obj':team.team_name})
