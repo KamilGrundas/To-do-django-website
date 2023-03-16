@@ -98,6 +98,13 @@ a {
   background-color: var(--color-main);
   color: var(--color-dark);
 }
+.btn--main_center {
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .btn:hover {
   opacity: 0.9;
