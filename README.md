@@ -3,6 +3,8 @@ front-end is not fully mine
 
 My django project:
 
+The web application allows you to create tasks and saves completed tasks. In addition, it allows you to create teams in which the leader distributes tasks to individual users, which allows for better coordination of projects.
+
 Login page:
 
 ![image](https://user-images.githubusercontent.com/108836782/224537236-6349c7e7-ea99-49a2-82bc-53a214793626.png)
