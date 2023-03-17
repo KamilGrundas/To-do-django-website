@@ -21,18 +21,50 @@
           <div class="topics-page layout__body">
 
 
-            <ul class="topics__list2">
+
 
               {% for team in teams %}
-              <li>
-                <a href="{% url 'team' team.id %}">{{team.team_name}}</a>
-              </li>
+              {% if request.user in team.team_leaders.all %}
+              <div class="roomListRoom__meta">
+                  <a href="{% url 'team' team.id %}">{{team.team_name}}</a>
+
+                  <a href = "{% url 'delete-team' team.id %}" class="btn btn--main_center" type="submit" name="pk" value ="{{team.id}}">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                      <title>disband</title>
+                      <path
+                        d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"
+                      ></path>
+                    </svg>
+                    Disband team
+                  </a>
+                </div>
+                <br>
+
+                <div class="roomListRoom__meta">
+                </div>
+                {% else %}
+                <div class="roomListRoom__meta">
+                  <a href="{% url 'team' team.id %}">{{team.team_name}}</a>
+
+                  <a href = "{% url 'leave-team' team.id %}" class="btn btn--main_center" type="submit" name="pk" value ="{{team.id}}">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                      <title>leave</title>
+                      <path
+                        d="M27.314 6.019l-1.333-1.333-9.98 9.981-9.981-9.981-1.333 1.333 9.981 9.981-9.981 9.98 1.333 1.333 9.981-9.98 9.98 9.98 1.333-1.333-9.98-9.98 9.98-9.981z"
+                      ></path>
+                    </svg>
+                    Leave team
+                  </a>
+                </div>
+                <br>
+
+                <div class="roomListRoom__meta">
+                </div>
+                {% endif %}
+
 
               {% endfor %}
-              <li>
-              </li>
 
-            </ul>
           </div>
         </div>
       </div>

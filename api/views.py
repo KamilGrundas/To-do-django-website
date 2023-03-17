@@ -413,6 +413,7 @@ def inviteDecline(request, pk):
     
 def teamList(request):
     teams = Team.objects.filter(team_members = request.user)
+
         
     context = {'teams': teams}
 
