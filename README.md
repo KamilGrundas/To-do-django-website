@@ -19,15 +19,11 @@ Create task form:
 
 Team room:
 
-![image](https://user-images.githubusercontent.com/108836782/224538027-02dbcdea-cc64-4fbc-a30a-db0835526246.png)
+![image](https://user-images.githubusercontent.com/108836782/225745410-6786268b-8b81-494d-9cff-aba30f2350a4.png)
 
 Archived tasks:
 
 ![image](https://user-images.githubusercontent.com/108836782/224538048-fda2a5fe-782b-414b-bb59-7968c47d6212.png)
-
-Mobile web view:
-
-![image](https://user-images.githubusercontent.com/108836782/224538098-26f87fcd-5e3e-44e5-a604-6c96651575c6.png)
 
 Invite notification:
 
@@ -36,4 +32,8 @@ Invite notification:
 User profile:
 
 ![image](https://user-images.githubusercontent.com/108836782/224538451-4f23e98a-f74a-4584-982b-5b90cff49272.png)
+
+Mobile home view:
+
+![image](https://user-images.githubusercontent.com/108836782/225746134-d56f2185-a16b-4a86-a95c-e5c11adc5b7c.png)
 
