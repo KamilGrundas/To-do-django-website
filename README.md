@@ -37,3 +37,17 @@ Mobile home view:
 
 ![image](https://user-images.githubusercontent.com/108836782/225746134-d56f2185-a16b-4a86-a95c-e5c11adc5b7c.png)
 
+Mobile teams tab:
+
+![image](https://user-images.githubusercontent.com/108836782/225919620-a7aefa10-e3cf-4f46-9e84-9f6987a3406c.png)
+
+Mobile team page:
+
+![image](https://user-images.githubusercontent.com/108836782/225919759-99051224-f762-4464-bc46-afc466b8af66.png)
+
+Mobile team members menu:
+
+![image](https://user-images.githubusercontent.com/108836782/225919919-a60e6a63-a3dd-4456-82ef-1b637c2c4604.png)
+
+
+
